@@ -18,11 +18,13 @@ public class Vehicle : Pawn
 
     protected virtual void VehicleUpdate()
     {
-        base.ActivatedUpdate();
-        var input = new Vector2(0, 0);
-        input.x = Input.GetAxis("Horizontal");
-        input.y = Input.GetAxis("Vertical");
-        this.MoveInput(input);
+        if (this.IsActive)
+        {
+            var input = new Vector2(0, 0);
+            input.x = Input.GetAxis("Horizontal");
+            input.y = Input.GetAxis("Vertical");
+            this.MoveInput(input);
+        }
     }
 
     // Start is called before the first frame update

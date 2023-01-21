@@ -10,15 +10,15 @@ public class AttackHeli : Vehicle
         
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void MoveInput(Vector2 input)
     {
+        base.MoveInput(input);
         
     }
 
-    protected override void ActivatedUpdate()
+    // Update is called once per frame
+    void Update()
     {
-        base.ActivatedUpdate();
-        
+        this.VehicleUpdate();
     }
 }
