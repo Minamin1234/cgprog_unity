@@ -61,6 +61,6 @@ public class Car : Vehicle
     // Update is called once per frame
     void Update()
     {
-        
+        this.VehicleUpdate();
     }
 }

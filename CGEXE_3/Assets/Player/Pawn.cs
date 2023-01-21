@@ -42,17 +42,9 @@ public class Pawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.isactive_)
-        {
-            this.ActivatedUpdate();
-        }
     }
 
     private void FixedUpdate()
     {
-        if (this.isactive_)
-        {
-            this.ActivatedFixedUpdate();
-        }
     }
 }

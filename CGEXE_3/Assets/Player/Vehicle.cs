@@ -16,7 +16,7 @@ public class Vehicle : Pawn
         
     }
 
-    protected override void ActivatedUpdate()
+    protected virtual void VehicleUpdate()
     {
         base.ActivatedUpdate();
         var input = new Vector2(0, 0);
