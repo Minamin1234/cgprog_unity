@@ -1100,9 +1100,14 @@ MonoBehaviour:
   isactive_: 0
   maincamera: {fileID: 29520967}
   cameras: []
-  maxtorque_: 0
+  maxtorque_: 1500
   Rotor: {fileID: 1432511175}
-  RotateSpeed: 1000
+  SubRotors:
+  - {fileID: 1882066814}
+  - {fileID: 1970336215}
+  BaseRotorRotateSpeed: 1000
+  MaxRotorRotateSpeed: 2000
+  MaxRotateSpeed: {x: 1000, y: 250, z: 150}
 --- !u!1 &1364884872 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4575445706798437234, guid: c0a799e27b8b148f39f8a1bba3dad081, type: 3}
@@ -1193,6 +1198,11 @@ Transform:
   m_Father: {fileID: 4012107489157159}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1882066814 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2603230702862650614, guid: 96a9d4f8132d15c4fb627b5fbdc3009c, type: 3}
+  m_PrefabInstance: {fileID: 497076670}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1886710184
 GameObject:
   m_ObjectHideFlags: 0
@@ -1289,6 +1299,11 @@ Transform:
   m_Father: {fileID: 4012107489157159}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1970336215 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2603230702862650608, guid: 96a9d4f8132d15c4fb627b5fbdc3009c, type: 3}
+  m_PrefabInstance: {fileID: 497076670}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2076613974
 PrefabInstance:
   m_ObjectHideFlags: 0
