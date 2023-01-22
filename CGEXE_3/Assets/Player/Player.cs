@@ -11,6 +11,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public GameObject PossessObject = null;  // 所有している乗り物(乗っている乗り物)
+    public Canvas MainUI = null;
+    public Canvas MenuUI = null;
     public TMPro.TextMeshProUGUI Text_Speed = null;  // 速度表示するテキストオブジェクト
     public TMPro.TextMeshProUGUI Text_Info = null;  // 情報を表示するテキストオブジェクト
     private bool isstart_ = false;
@@ -18,6 +20,7 @@ public class Player : MonoBehaviour
     private int coursecount_ = 0;
     private float time_start_ = 0;
     private float time_prev_ = 0;
+    private bool ismenu_ = false;
 
     public void OnGoal()
     {
@@ -49,7 +52,7 @@ public class Player : MonoBehaviour
         if (this.PossessObject != null && this.PossessObject.GetComponent<Rigidbody>() != null)
         {
             var speed_ = this.PossessObject.GetComponent<Rigidbody>().velocity.sqrMagnitude;
-            return (speed_ * 3600) / 1000;
+            return (speed_ * 3600) / 10000;
         }
         return 0.0f;
     }
@@ -75,7 +78,7 @@ public class Player : MonoBehaviour
         if (this.Text_Speed != null)
         {
             var txt_speed_ = "";
-            txt_speed_ += $"SPEED:  {this.GetSpeedKPH()}KM/H";
+            txt_speed_ += $"SPEED:  {this.GetSpeedKPH():F1}KM/H";
             this.Text_Speed.text = txt_speed_;
         }
 
@@ -85,8 +88,24 @@ public class Player : MonoBehaviour
             txt_info_ += $"Time: {Time.time - this.time_start_}s\n";
             txt_info_ += $"Time(Previous): {this.time_prev_}s\n";
             txt_info_ += $"CourseCount: {this.coursecount_}\n";
-            this.Text_Speed.text = txt_info_;
+            this.Text_Info.text = txt_info_;
         }
+    }
+
+    bool ShowMenu(bool show)
+    {
+        if (show)
+        {
+            this.MainUI.gameObject.SetActive(false);
+            this.MenuUI.gameObject.SetActive(true);
+        }
+        else
+        {
+            this.MainUI.gameObject.SetActive(true);
+            this.MenuUI.gameObject.SetActive(false);
+        }
+
+        return show;
     }
 
     // Update is called once per frame
@@ -95,6 +114,12 @@ public class Player : MonoBehaviour
         if (this.PossessObject != null)
         {
             this.gameObject.transform.localPosition = this.PossessObject.transform.localPosition;
+            this.UpdateTexts();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            this.ismenu_ = this.ShowMenu(!this.ismenu_);
         }
     }
 
