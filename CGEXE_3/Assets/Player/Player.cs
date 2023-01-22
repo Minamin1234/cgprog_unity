@@ -4,23 +4,27 @@ using System.Collections.Generic;
 using UnityEditor.TextCore.Text;
 using UnityEditor.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 
 
 public class Player : MonoBehaviour
 {
+    public List<GameObject> Vehicles = new List<GameObject>();
     public GameObject PossessObject = null;  // 所有している乗り物(乗っている乗り物)
     public Canvas MainUI = null;
     public Canvas MenuUI = null;
     public TMPro.TextMeshProUGUI Text_Speed = null;  // 速度表示するテキストオブジェクト
     public TMPro.TextMeshProUGUI Text_Info = null;  // 情報を表示するテキストオブジェクト
+    public TMPro.TMP_Dropdown Dropdown_Vehicles = null;
     private bool isstart_ = false;
     private bool ismid_ = false;
     private int coursecount_ = 0;
     private float time_start_ = 0;
     private float time_prev_ = 0;
     private bool ismenu_ = false;
+    private Canvas currentui_ = null;
 
     public void OnGoal()
     {
@@ -44,6 +48,35 @@ public class Player : MonoBehaviour
         if (this.isstart_)
         {
             this.ismid_ = true;
+        }
+    }
+
+    public void OnButtonVehicleChangeClicked()
+    {
+        
+    }
+
+    public void OnButtonTitleClicked()
+    {
+        
+    }
+
+    public void OnButtonExitClicked()
+    {
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
+        Application.Quit();
+        #endif
+    }
+
+    public void OnDropdownVehiclesChanged()
+    {
+        var selected = 0;
+        if (this.Dropdown_Vehicles != null)
+        {
+            selected = this.Dropdown_Vehicles.value;
+            Debug.Log(selected);
         }
     }
 
@@ -106,6 +139,13 @@ public class Player : MonoBehaviour
         }
 
         return show;
+    }
+
+    void ShowUI(Canvas newui)
+    {
+        this.MenuUI.gameObject.SetActive(false);
+        currentui_ = newui;
+        currentui_.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
