@@ -9,8 +9,8 @@ public class AttackHeli : Vehicle
     public GameObject Rotor = null;
     public List<GameObject> SubRotors = new List<GameObject>();
     public float BaseRotorRotateSpeed = 1000.0f;
-    public float MaxRotorRotateSpeed = 5000.0f;
-    public Vector3 MaxRotateSpeed = new Vector3(500, 1000, 500);
+    public float MaxRotorRotateSpeed = 2000.0f;
+    public Vector3 MaxRotateSpeed = new Vector3(1000, 250, 150);
 
     public float MaxUpSpeed
     {
