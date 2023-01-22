@@ -9,7 +9,9 @@ using UnityEngine;
 public class Vehicle : Pawn
 {
     [SerializeField]
-    protected float maxtorque_ = 0.0f;
+    protected float maxtorque_ = 1500.0f;
+
+    protected float maxbraketorque = 2000.0f;
 
     protected virtual void MoveInput(Vector2 input)
     {

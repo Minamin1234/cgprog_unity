@@ -33,23 +33,52 @@ public class Car : Vehicle
         base.MoveInput(input);
         var torque = this.maxtorque_ * input.y;
         var steer = this.maxSteerAngle * input.x;
-        foreach (var ws in this.Shafts)
+        if (Input.GetKey(KeyCode.Space))
         {
-            if (ws.IsDrive)
+            Debug.Log("Space");
+            foreach (var ws in this.Shafts)
             {
-                ws.WheelLeft.motorTorque = torque;
-                ws.WheelRight.motorTorque = torque;
-            }
+                if (ws.IsDrive)
+                {
+                    ws.WheelLeft.motorTorque = 0;
+                    ws.WheelLeft.brakeTorque = this.maxbraketorque;
+                    ws.WheelRight.motorTorque = 0;
+                    ws.WheelRight.brakeTorque = this.maxbraketorque;
+                }
 
-            if (ws.IsSteer)
-            {
-                ws.WheelLeft.steerAngle = steer;
-                ws.WheelRight.steerAngle = steer;
+                if (ws.IsSteer)
+                {
+                    ws.WheelLeft.steerAngle = steer;
+                    ws.WheelLeft.brakeTorque = this.maxbraketorque;
+                    ws.WheelRight.steerAngle = steer;
+                    ws.WheelRight.brakeTorque = this.maxbraketorque;
+                }
             }
-            this.RotateWheelModel(ws.WheelLeft);
-            this.RotateWheelModel(ws.WheelRight);
         }
-        Debug.Log("Active");
+        else
+        {
+            foreach (var ws in this.Shafts)
+            {
+                if (ws.IsDrive)
+                {
+                    ws.WheelLeft.brakeTorque = 0;
+                    ws.WheelLeft.motorTorque = torque;
+                    ws.WheelRight.brakeTorque = 0;
+                    ws.WheelRight.motorTorque = torque;
+                }
+
+                if (ws.IsSteer)
+                {
+                    ws.WheelLeft.brakeTorque = 0;
+                    ws.WheelLeft.steerAngle = steer;
+                    ws.WheelRight.brakeTorque = 0;
+                    ws.WheelRight.steerAngle = steer;
+                }
+                this.RotateWheelModel(ws.WheelLeft);
+                this.RotateWheelModel(ws.WheelRight);
+            }
+        }
+        
     }
 
     protected override void VehicleUpdate()

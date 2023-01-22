@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.TextCore.Text;
 using UnityEditor.UI;
 using UnityEngine;
 
@@ -9,7 +10,33 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public GameObject PossessObject = null;
+    public GameObject PossessObject = null;  // 所有している乗り物(乗っている乗り物)
+    private bool isstart_ = false;
+    private bool ismid_ = false;
+    private int coursecount_ = 0;
+
+    public void OnGoal()
+    {
+        if (this.isstart_ && this.ismid_)
+        {
+            this.ismid_ = false;
+            this.isstart_ = false;
+            this.coursecount_++;
+            Debug.Log(this.coursecount_);
+        }
+        else
+        {
+            this.isstart_ = true;
+        }
+    }
+
+    public void OnMid()
+    {
+        if (this.isstart_)
+        {
+            this.ismid_ = true;
+        }
+    }
     
     // Start is called before the first frame update
     void Start()
