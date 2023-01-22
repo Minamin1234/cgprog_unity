@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HoverCraft : Vehicle
 {
+    public float TurnSpeed = 1000.0f;
     public float MoveSpeed
     {
         get { return this.maxtorque_; }
@@ -15,20 +16,48 @@ public class HoverCraft : Vehicle
         base.MoveInput(input);
         var v1 = this.transform.forward * (this.MoveSpeed * input.y * Time.deltaTime);
         var v2 = this.transform.right * (this.MoveSpeed * input.x * Time.deltaTime);
+       
         var rb = GetComponent<Rigidbody>();
         rb.AddForce(v1);
         rb.AddForce(v2);
+    }
+    
+    protected override void VehicleUpdate()
+    {
+        base.VehicleUpdate();
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            this.MainView();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            this.ChangeView(0);
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        foreach (var c in this.cameras)
+        {
+            Debug.Log(c);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         this.VehicleUpdate();
+        if (this.isactive_)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                this.MainView();
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                this.ChangeView(0);
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ public class Pawn : MonoBehaviour
     public bool isactive_ = false;
     public Camera maincamera = null;
     public List<Camera> cameras = new List<Camera>();
+    protected Camera camera_ = null;
 
     public bool IsActive
     {
@@ -22,6 +23,7 @@ public class Pawn : MonoBehaviour
     {
         this.isactive_ = true;
         this.maincamera.gameObject.SetActive(true);
+        this.camera_ = this.maincamera;
     }
 
     public virtual void UnPossess()
@@ -31,6 +33,33 @@ public class Pawn : MonoBehaviour
         foreach (var c in this.cameras)
         {
             c.gameObject.SetActive(false);
+        }
+    }
+
+    public virtual void MainView()
+    {
+        this.maincamera.gameObject.SetActive(true);
+        foreach (var c in this.cameras)
+        {
+            c.gameObject.SetActive(false);
+        }
+    }
+
+    public virtual void ChangeView(int to)
+    {
+        try
+        {
+            if (this.camera_ != null)
+            {
+                this.camera_.gameObject.SetActive(false);
+            }
+            this.camera_ = this.cameras[to];
+            this.camera_.gameObject.SetActive(true);
+            Debug.Log(this.camera_);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
         }
     }
     

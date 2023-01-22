@@ -52,6 +52,22 @@ public class Car : Vehicle
         Debug.Log("Active");
     }
 
+    protected override void VehicleUpdate()
+    {
+        base.VehicleUpdate();
+        if (this.isactive_)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                this.MainView();
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                this.ChangeView(0);
+            }
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
