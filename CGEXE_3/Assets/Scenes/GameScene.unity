@@ -6517,7 +6517,7 @@ MonoBehaviour:
   cameras:
   - {fileID: 2110304396}
   maxtorque_: 1500
-  TurnSpeed: 1000
+  TurnSpeed: 1500
   BreakSpeed: 0.5
 --- !u!1 &1721912374
 GameObject:

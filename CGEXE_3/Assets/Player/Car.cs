@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.TextCore.Text;
-using UnityEditor.UI;
 using UnityEngine;
 
 [System.Serializable]

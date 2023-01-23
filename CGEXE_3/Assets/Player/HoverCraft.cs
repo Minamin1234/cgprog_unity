@@ -15,9 +15,12 @@ public class HoverCraft : Vehicle
     protected override void MoveInput(Vector2 input)
     {
         base.MoveInput(input);
+        var mouseinput = new Vector2(0, 0);
+        mouseinput.x = Input.GetAxis("Mouse X");
+        mouseinput.y = Input.GetAxis("Mouse Y");
         var v1 = this.transform.forward * (this.MoveSpeed * input.y * Time.deltaTime);
         var v2 = this.transform.right * (this.MoveSpeed * input.x * Time.deltaTime);
-        var v4 = this.transform.up * (this.TurnSpeed * input.x * Time.deltaTime);
+        var v4 = this.transform.up * (this.TurnSpeed * mouseinput.x * Time.deltaTime);
        
         var rb = GetComponent<Rigidbody>();
         if (Input.GetKey(KeyCode.Space))
