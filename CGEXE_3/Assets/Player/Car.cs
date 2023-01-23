@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.TextCore.Text;
 using UnityEditor.UI;
 using UnityEngine;
 
@@ -27,6 +28,31 @@ public class Car : Vehicle
         w.transform.position = pos;
         w.transform.rotation = rot;
     }
+    
+    /// <summary>
+    /// ブレーキをかけます
+    /// </summary>
+    /// <param name="brake">ブレーキするか否か</param>
+    /// <param name="percent">ブレーキの踏み込み率</param>
+    public void Brake(bool brake, float percent=1.0f)
+    {
+        if (brake)
+        {
+            foreach (var ws in this.Shafts)
+            {
+                ws.WheelLeft.brakeTorque = this.maxbraketorque * percent;
+                ws.WheelRight.brakeTorque = this.maxbraketorque * percent;
+            }
+        }
+        else
+        {
+            foreach (var ws in this.Shafts)
+            {
+                ws.WheelLeft.brakeTorque = 0;
+                ws.WheelRight.brakeTorque = 0;
+            }
+        }
+    }
 
     protected override void MoveInput(Vector2 input)
     {
@@ -35,25 +61,21 @@ public class Car : Vehicle
         var steer = this.maxSteerAngle * input.x;
         if (Input.GetKey(KeyCode.Space))
         {
-            Debug.Log("Space");
             foreach (var ws in this.Shafts)
             {
                 if (ws.IsDrive)
                 {
                     ws.WheelLeft.motorTorque = 0;
-                    ws.WheelLeft.brakeTorque = this.maxbraketorque;
                     ws.WheelRight.motorTorque = 0;
-                    ws.WheelRight.brakeTorque = this.maxbraketorque;
                 }
 
                 if (ws.IsSteer)
                 {
                     ws.WheelLeft.steerAngle = steer;
-                    ws.WheelLeft.brakeTorque = this.maxbraketorque;
                     ws.WheelRight.steerAngle = steer;
-                    ws.WheelRight.brakeTorque = this.maxbraketorque;
                 }
             }
+            this.Brake(true);
         }
         else
         {
@@ -61,22 +83,19 @@ public class Car : Vehicle
             {
                 if (ws.IsDrive)
                 {
-                    ws.WheelLeft.brakeTorque = 0;
                     ws.WheelLeft.motorTorque = torque;
-                    ws.WheelRight.brakeTorque = 0;
                     ws.WheelRight.motorTorque = torque;
                 }
 
                 if (ws.IsSteer)
                 {
-                    ws.WheelLeft.brakeTorque = 0;
                     ws.WheelLeft.steerAngle = steer;
-                    ws.WheelRight.brakeTorque = 0;
                     ws.WheelRight.steerAngle = steer;
                 }
                 this.RotateWheelModel(ws.WheelLeft);
                 this.RotateWheelModel(ws.WheelRight);
             }
+            this.Brake(true, 0.0f);
         }
         
     }

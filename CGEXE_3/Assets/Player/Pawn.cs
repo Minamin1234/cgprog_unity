@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -8,24 +9,30 @@ using UnityEngine;
 /// </summary>
 public class Pawn : MonoBehaviour
 {
-    public bool isactive_ = false;
-    public Camera maincamera = null;
-    public List<Camera> cameras = new List<Camera>();
-    protected Camera camera_ = null;
+    public bool isactive_ = false;  // このオブジェクトを所有していて有効かどうか
+    public Camera maincamera = null;  // メインカメラ
+    public List<Camera> cameras = new List<Camera>();  // サブカメラ一覧
+    protected Camera camera_ = null;  // 現在稼働しているカメラ
 
     public bool IsActive
     {
         get { return this.isactive_; }
         set { this.isactive_ = value; }
     }
-
+    
+    /// <summary>
+    /// そのオブジェクトを所有します
+    /// </summary>
     public virtual void Possess()
     {
         this.isactive_ = true;
         this.maincamera.gameObject.SetActive(true);
         this.camera_ = this.maincamera;
     }
-
+    
+    /// <summary>
+    /// そのオブジェクトを手放す
+    /// </summary>
     public virtual void UnPossess()
     {
         this.isactive_ = false;
@@ -35,7 +42,10 @@ public class Pawn : MonoBehaviour
             c.gameObject.SetActive(false);
         }
     }
-
+    
+    /// <summary>
+    /// MainUIに設定する
+    /// </summary>
     public virtual void MainView()
     {
         this.maincamera.gameObject.SetActive(true);
@@ -44,7 +54,11 @@ public class Pawn : MonoBehaviour
             c.gameObject.SetActive(false);
         }
     }
-
+    
+    /// <summary>
+    /// 指定したインデックスのUIに切り替える
+    /// </summary>
+    /// <param name="to">切り替えるUIリストのインデックス</param>
     public virtual void ChangeView(int to)
     {
         try

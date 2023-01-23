@@ -17,6 +17,7 @@ public class HoverCraft : Vehicle
         base.MoveInput(input);
         var v1 = this.transform.forward * (this.MoveSpeed * input.y * Time.deltaTime);
         var v2 = this.transform.right * (this.MoveSpeed * input.x * Time.deltaTime);
+        var v4 = this.transform.up * (this.TurnSpeed * input.x * Time.deltaTime);
        
         var rb = GetComponent<Rigidbody>();
         if (Input.GetKey(KeyCode.Space))
@@ -28,6 +29,7 @@ public class HoverCraft : Vehicle
         {
             rb.AddForce(v1);
             rb.AddForce(v2);
+            rb.AddTorque(v4);
         }
     }
     
@@ -50,10 +52,7 @@ public class HoverCraft : Vehicle
     // Start is called before the first frame update
     void Start()
     {
-        foreach (var c in this.cameras)
-        {
-            Debug.Log(c);
-        }
+
     }
 
     // Update is called once per frame
